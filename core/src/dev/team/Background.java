@@ -19,8 +19,8 @@ public class Background {
         }
 
         public void update(float dt) {
-            position.x += velocity.x * dt;
-            position.y += velocity.y * dt;
+            position.x += (velocity.x - starGame.getHero().getLastDisplacement().x * 15) * dt;
+            position.y += (velocity.y - starGame.getHero().getLastDisplacement().y * 15) * dt;
 
             if (position.x < -200) {
                 position.x = ScreenManager.SCREEN_WIDTH + 200;
@@ -37,7 +37,7 @@ public class Background {
 
     public Background(StarGame starGame) {
         this.starGame = starGame;
-        this.textureCosmos = new Texture("bg.png");
+        this.textureCosmos = new Texture("bg.jpg");
         this.textureStar = new Texture("star16.png");
         this.stars = new Star[STAR_COUNT];
         for (int i = 0; i < stars.length; i++) {
