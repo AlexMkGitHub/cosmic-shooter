@@ -1,19 +1,31 @@
 package dev.team.game;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import dev.team.helpers.Poolable;
-
+import dev.team.game.helpers.Poolable;
+import dev.team.screen.ScreenManager;
 public class Asteroid implements Poolable {
+    private GameController gc;
+    private Texture texture;
     private Vector2 position;
     private Vector2 velocity;
     private boolean active;
-    private Texture asteroidTexture;
+    private int hpMax;
+    private int hp;
     private float angle;
+    private float rotationSpeed;
+    private Circle hitArea;
     private float scale;
-    private int scaleRnd;
-    private int rotation;
+
+    private final float BASE_SIZE = 256;
+    private final float BASE_RADIUS = BASE_SIZE / 2;
+
+    public Circle getHitArea() {
+        return hitArea;
+    }
 
     @Override
     public boolean isActive() {
@@ -24,29 +36,35 @@ public class Asteroid implements Poolable {
         return position;
     }
 
-    public Texture getAsteroidTexture() {
-        return asteroidTexture;
-    }
-
     public Vector2 getVelocity() {
         return velocity;
     }
 
-    public float getAngle() {
-        return angle;
-    }
-
-    public float getScale() {
-        return scale;
-    }
-
-    public Asteroid() {
-        this.asteroidTexture = new Texture("aster.png");
+    public Asteroid(GameController gc) {
+        this.gc = gc;
+        this.texture = new Texture("aster.png");
         this.position = new Vector2(0, 0);
         this.velocity = new Vector2(0, 0);
-        this.scaleRnd = MathUtils.random(1, 3);
-        this.rotation = MathUtils.random(-2, 2);
+        this.hitArea = new Circle(0, 0, 0);
         this.active = false;
+    }
+
+    public void render(SpriteBatch batch) {
+            batch.draw(texture, position.x - 128, position.y - 128, 24, 24, 256, 256);
+    }
+
+    public boolean takeDamage(int amount) {
+        hp -= amount;
+        if (hp <= 0) {
+            deactivate();
+            if (scale >= 0.5f) {
+                gc.getAsteroidController().setup(position.x, position.y, MathUtils.random(-150, 150), MathUtils.random(-150, 150), scale - 0.25f);
+                gc.getAsteroidController().setup(position.x, position.y, MathUtils.random(-150, 150), MathUtils.random(-150, 150), scale - 0.25f);
+            }
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public void deactivate() {
@@ -54,39 +72,37 @@ public class Asteroid implements Poolable {
     }
 
     public void update(float dt) {
+        position.mulAdd(velocity, dt);
+        angle += rotationSpeed * dt;
+        if (position.x < -(BASE_RADIUS * scale)) {
+            position.x = ScreenManager.SCREEN_WIDTH + (BASE_RADIUS * scale);
+        }
 
-        /*----------------Произвольное вращение астероида-----------------------*/
-        switch (rotation) {
-            case -2:
-                angle -= 1.5f;
-                break;
-            case -1:
-                angle -= 0.7f;
-                break;
-            case 1:
-                angle += 0.7f;
-                break;
-            case 2:
-                angle += 1.5f;
-                break;
+        if (position.y < -(BASE_RADIUS * scale)) {
+            position.y = ScreenManager.SCREEN_HEIGHT + (BASE_RADIUS * scale);
         }
-        /*---------------Произвольный размер астероида----------------*/
-        switch (scaleRnd) {
-            case 1:
-                scale = 0.5f;
-                break;
-            case 2:
-                scale = 0.75f;
-                break;
-            case 3:
-                scale = 1.0f;
-                break;
+
+        if (position.x > ScreenManager.SCREEN_WIDTH + (BASE_RADIUS * scale)) {
+            position.x = -(BASE_RADIUS * scale);
         }
+
+        if (position.y > ScreenManager.SCREEN_HEIGHT + (BASE_RADIUS * scale)) {
+            position.y = -(BASE_RADIUS * scale);
+        }
+        hitArea.setPosition(position);
     }
 
-    public void activate(float x, float y, float vx, float vy) {
+    public void activate(float x, float y, float vx, float vy, float scale) {
         position.set(x, y);
         velocity.set(vx, vy);
         active = true;
+        hpMax = (int) (5 * scale + gc.getLevel() * 2);
+        hp = hpMax;
+        angle = MathUtils.random(-360.0f, 360.0f);
+        rotationSpeed = MathUtils.random(-180.0f, 180.0f);
+        this.scale = scale;
+        hitArea.setPosition(position);
+        hitArea.setRadius(BASE_RADIUS * scale * 0.9f);
+
     }
 }

@@ -21,8 +21,12 @@ public class Background {
         }
 
         public void update(float dt) {
-            position.x += (velocity.x - gc.getHero().getVelocity().x * 0.1) * dt;
-            position.y += (velocity.y - gc.getHero().getVelocity().y * 0.1) * dt;
+            if (gc != null) {
+                position.x += (velocity.x - gc.getHero().getVelocity().x * 0.1) * dt;
+                position.y += (velocity.y - gc.getHero().getVelocity().y * 0.1) * dt;
+            } else {
+                position.mulAdd(velocity, dt);
+            }
 
             if (position.x < -200) {
                 position.x = ScreenManager.SCREEN_WIDTH + 200;
@@ -31,7 +35,7 @@ public class Background {
         }
     }
 
-    private final int STAR_COUNT = 2000;
+    private final int STAR_COUNT = 1000;
     private GameController gc;
     private Texture textureCosmos;
     private Texture textureStar;
@@ -51,15 +55,12 @@ public class Background {
         batch.draw(textureCosmos, 0, 0);
         for (int i = 0; i < stars.length; i++) {
             batch.draw(textureStar, stars[i].position.x - 8, stars[i].position.y - 8, 8, 8,
-                    16, 16, stars[i].scale, stars[i].scale, 0, 0, 0, 16,
-                    16, false, false);
+                    16, 16);
 
             if (MathUtils.random(0, 5000) < 1) {
                 batch.draw(textureStar, stars[i].position.x - 8, stars[i].position.y - 8, 8, 8,
-                        16, 16, stars[i].scale * 4f, stars[i].scale * 4f, 0, 0, 0, 16,
-                        16, false, false);
+                        16, 16);
             }
-
         }
     }
 
@@ -68,4 +69,10 @@ public class Background {
             stars[i].update(dt);
         }
     }
+
+    public void dispose() {
+        textureCosmos.dispose();
+    }
+
 }
+
