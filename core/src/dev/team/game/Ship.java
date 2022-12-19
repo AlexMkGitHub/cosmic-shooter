@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import dev.team.game.helpers.Poolable;
 import dev.team.screen.ScreenManager;
 import dev.team.screen.utils.Assets;
@@ -17,6 +18,8 @@ public class Ship implements Poolable {
     protected GameController gc;
     protected Circle hitArea;
     protected Circle radiusDetected;
+    protected Weapon currentWeapon;
+    protected Weapon[] weapons;
     protected float angle;
     protected float enginePower;
     protected float fireTimer;
@@ -30,6 +33,10 @@ public class Ship implements Poolable {
 
     public OwnerType getOwnerType() {
         return ownerType;
+    }
+
+    public Weapon getCurrentWeapon() {
+        return currentWeapon;
     }
 
     public float getAngle() {
@@ -81,7 +88,8 @@ public class Ship implements Poolable {
         } else if (gc.getLevel() > 15) {
             weaponNum = MathUtils.random(2, 4);
         }
-
+        createWeapons();
+        this.currentWeapon = weapons[weaponNum];
         this.active = false;
     }
 
@@ -143,6 +151,51 @@ public class Ship implements Poolable {
         }
     }
 
+    public void tryToFire() {
+        float wx;
+        float wy;
+        if (fireTimer > currentWeapon.getFirePeriod()) {
+            fireTimer = 0.0f;
+            currentWeapon.fire();
+        }
+    }
+
+    private void createWeapons() {
+        weapons = new Weapon[]{
+                new Weapon(gc, this, "Laser", 0.2f, 1, 300f, 300,
+                        new Vector3[]{
+                                new Vector3(28, 90, 0),
+                                new Vector3(28, -90, 0),
+                        }),
+                new Weapon(gc, this, "Laser", 0.2f, 1, 600f, 500,
+                        new Vector3[]{
+                                new Vector3(28, 0, 0),
+                                new Vector3(28, 90, 20),
+                                new Vector3(28, -90, -20),
+                        }),
+                new Weapon(gc, this, "Laser", 0.1f, 1, 600f, 1000,
+                        new Vector3[]{
+                                new Vector3(28, 0, 0),
+                                new Vector3(28, 90, 20),
+                                new Vector3(28, -90, -20),
+                        }),
+                new Weapon(gc, this, "Laser", 0.1f, 2, 600f, 1000,
+                        new Vector3[]{
+                                new Vector3(28, 90, 0),
+                                new Vector3(28, -90, 0),
+                                new Vector3(28, 90, 15),
+                                new Vector3(28, -90, -15),
+                        }),
+                new Weapon(gc, this, "Laser", 0.1f, 3, 600f, 1500,
+                        new Vector3[]{
+                                new Vector3(28, 0, 0),
+                                new Vector3(28, 90, 10),
+                                new Vector3(28, 90, 20),
+                                new Vector3(28, -90, -10),
+                                new Vector3(28, -90, -20),
+                        }),
+        };
+    }
 
     public void deactivate() {
         active = false;

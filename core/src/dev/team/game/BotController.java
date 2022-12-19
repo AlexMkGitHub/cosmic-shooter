@@ -24,6 +24,7 @@ public class BotController extends ObjectPool<Bot> {
 
     public void setup(float x, float y) {
         getActiveElement().activate(x, y);
+        gc.getParticleController().getEffectBuilder().botAddEffect(x, y);
     }
 
     public void update(float dt) {

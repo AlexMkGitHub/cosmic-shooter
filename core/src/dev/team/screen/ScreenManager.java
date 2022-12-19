@@ -9,7 +9,7 @@ import dev.team.screen.utils.Assets;
 
 public class ScreenManager {
     public enum ScreenType {
-        GAME
+        GAME, GAMEOVER
     }
 
     public static final int SCREEN_WIDTH = 1280;
@@ -22,7 +22,6 @@ public class ScreenManager {
     private SpriteBatch batch;
     private LoadingScreen loadingScreen;
     private GameScreen gameScreen;
-
     private Screen targetScreen;
     private Viewport viewport;
 
@@ -58,7 +57,6 @@ public class ScreenManager {
         if (screen != null) {
             screen.dispose();
         }
-
         game.setScreen(loadingScreen);
         switch (type) {
             case GAME:
