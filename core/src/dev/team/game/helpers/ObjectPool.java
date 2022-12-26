@@ -21,6 +21,7 @@ public abstract class ObjectPool<T extends Poolable> {
         this.activeList = new ArrayList<T>();
         this.freeList = new ArrayList<T>();
     }
+
     public T getActiveElement() {
         if (freeList.size() > 1) {
             freeList.clear();

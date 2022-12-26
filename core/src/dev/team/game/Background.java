@@ -2,9 +2,11 @@ package dev.team.game;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import dev.team.screen.ScreenManager;
+import dev.team.screen.utils.Assets;
 
 public class Background {
 
@@ -38,13 +40,13 @@ public class Background {
     private final int STAR_COUNT = 1000;
     private GameController gc;
     private Texture textureCosmos;
-    private Texture textureStar;
+    private TextureRegion textureStar;
     private Star[] stars;
 
     public Background(GameController gc) {
         this.gc = gc;
-        this.textureCosmos = new Texture("bg.jpg");
-        this.textureStar = new Texture("star16.png");
+        this.textureCosmos = new Texture("images/space2.png");
+        this.textureStar = Assets.getInstance().getAtlas().findRegion("star16");
         this.stars = new Star[STAR_COUNT];
         for (int i = 0; i < stars.length; i++) {
             stars[i] = new Star();
@@ -55,11 +57,11 @@ public class Background {
         batch.draw(textureCosmos, 0, 0);
         for (int i = 0; i < stars.length; i++) {
             batch.draw(textureStar, stars[i].position.x - 8, stars[i].position.y - 8, 8, 8,
-                    16, 16);
+                    16, 16, stars[i].scale, stars[i].scale, 0);
 
             if (MathUtils.random(0, 5000) < 1) {
                 batch.draw(textureStar, stars[i].position.x - 8, stars[i].position.y - 8, 8, 8,
-                        16, 16);
+                        16, 16, stars[i].scale * 4f, stars[i].scale * 4f, 0);
             }
         }
     }

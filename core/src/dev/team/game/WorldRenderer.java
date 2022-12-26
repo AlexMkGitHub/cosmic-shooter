@@ -29,15 +29,19 @@ public class WorldRenderer {
         batch.begin();
         gc.getBackground().render(batch);
         gc.getAsteroidController().render(batch);
+        gc.getBulletController().render(batch);
+        gc.getParticleController().render(batch);
+        gc.getPowerUpsController().render(batch);
+        gc.getInfoController().render(batch, font20);
         gc.getHero().render(batch);
         gc.getHero().renderGUI(batch, font20);
         gc.getBotController().render(batch);
         if (gc.getTimerAsteroidsAdds() > 2.5f && gc.getTimerAsteroidsAdds() <= 3.5f) {
             gameLevelShow(gc.getLevel(), batch);
         }
-
         batch.end();
         gc.getStage().draw();
+
     }
 
     public void gameLevelShow(int level, SpriteBatch batch) {

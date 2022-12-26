@@ -13,7 +13,7 @@ public class StarGame extends Game {
     public void create() {
         this.batch = new SpriteBatch();
         ScreenManager.getInstance().init(this, batch);
-        ScreenManager.getInstance().changeScreen(ScreenManager.ScreenType.GAME);
+        ScreenManager.getInstance().changeScreen(ScreenManager.ScreenType.MENU);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package dev.team.game;
 
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
@@ -16,7 +17,9 @@ public class Bot extends Ship implements Poolable {
     private Vector2 tempVec;
     private int rndHeroPresentGift;
     private int scale;
+    private Music boom;
     int xpWidth;
+    TextureRegion xpTexture;
 
     public int getHp() {
         return hp;
@@ -33,9 +36,12 @@ public class Bot extends Ship implements Poolable {
         this.velocity = new Vector2(0, 0);
         this.tempVec = new Vector2(0, 0);
         this.texture = Assets.getInstance().getAtlas().findRegion("ship" + MathUtils.random(4, 9));
+        this.xpTexture = Assets.getInstance().getAtlas().findRegion("xp");
         this.hitArea = new Circle(position, 29);
         this.hitArea.setRadius(BASE_RADIUS);
         this.active = false;
+        this.boom = Assets.getInstance().getAssetManager().get("audio/boom.mp3");
+        boom.setVolume(0.50f);
         this.ownerType = OwnerType.BOT;
         this.rndHeroPresentGift = 0;
         if (gc.getLevel() <= 3) {
@@ -61,8 +67,11 @@ public class Bot extends Ship implements Poolable {
             }
             hp = hpMax;
             deactivate();
+            gc.getParticleController().getEffectBuilder().destroyEffect(position.x, position.y);
+            boom.play();
         }
         if (rndHeroPresentGift > 0 && rndHeroPresentGift <= 50) {
+            gc.getHero().botDestroyPresent(MathUtils.random(2));
             rndHeroPresentGift = 0;
         }
     }
@@ -73,6 +82,7 @@ public class Bot extends Ship implements Poolable {
                 scale, angle);
         if (!gc.getBotController().getActiveList().isEmpty() && hp > 0) {
             xpWidth = (hp * 60) / hpMax;
+            batch.draw(xpTexture, position.x - 32, position.y + 32, xpWidth, 5);
         }
     }
 
@@ -80,14 +90,25 @@ public class Bot extends Ship implements Poolable {
         if (gc.isHeroVisible()) {
             tempVec.set(gc.getHero().getPosition()).sub(position).nor();
             angle = tempVec.angleDeg();
+
             if (gc.getHero().getPosition().dst(position) > 200) {
                 accelerate(dt);
                 if (velocity.len() > 50.0f) {
                     float bx = position.x + MathUtils.cosDeg(angle + 180) * 20;
                     float by = position.y + MathUtils.sinDeg(angle + 180) * 20;
+                    for (int i = 0; i < 3; i++) {
+                        gc.getParticleController().setup(bx + MathUtils.random(-4, 4), by + MathUtils.random(-4, 4),
+                                velocity.x * -0.2f + MathUtils.random(-20, 20), velocity.y * -0.2f + MathUtils.random(-20, 20),
+                                0.5f, 1.2f, 0.2f,
+                                1.0f, 0.0f, 0.0f, 1,
+                                1.0f, 0.5f, 0f, 0);
+                    }
                 }
             }
 
+            if (gc.getHero().getPosition().dst(position) < 300 && gc.getHero().hp > 0) {
+                tryToFire();
+            }
         }
     }
 

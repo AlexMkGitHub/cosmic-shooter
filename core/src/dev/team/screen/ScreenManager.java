@@ -5,11 +5,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import dev.team.StarGame;
+import dev.team.game.Hero;
 import dev.team.screen.utils.Assets;
 
 public class ScreenManager {
     public enum ScreenType {
-        GAME
+        GAME, MENU, GAMEOVER
     }
 
     public static final int SCREEN_WIDTH = 1280;
@@ -22,6 +23,8 @@ public class ScreenManager {
     private SpriteBatch batch;
     private LoadingScreen loadingScreen;
     private GameScreen gameScreen;
+    private MenuScreen menuScreen;
+    private GameOverScreen gameOverScreen;
 
     private Screen targetScreen;
     private Viewport viewport;
@@ -44,6 +47,8 @@ public class ScreenManager {
         this.batch = batch;
         this.viewport = new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT);
         this.gameScreen = new GameScreen(batch);
+        this.menuScreen = new MenuScreen(batch);
+        this.gameOverScreen = new GameOverScreen(batch);
         this.loadingScreen = new LoadingScreen(batch);
     }
 
@@ -65,7 +70,17 @@ public class ScreenManager {
                 targetScreen = gameScreen;
                 Assets.getInstance().loadAssets(ScreenType.GAME);
                 break;
+            case MENU:
+                targetScreen = menuScreen;
+                Assets.getInstance().loadAssets(ScreenType.MENU);
+                break;
+            case GAMEOVER:
+                targetScreen = gameOverScreen;
+                gameOverScreen.setDefeatedHero((Hero) args[0]);
+                Assets.getInstance().loadAssets(ScreenType.GAMEOVER);
+                break;
         }
+
     }
 
     public void goToTarget() {

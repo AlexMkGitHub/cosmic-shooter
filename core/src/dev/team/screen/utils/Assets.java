@@ -3,6 +3,8 @@ package dev.team.screen.utils;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.FileHandleResolver;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -37,11 +39,38 @@ public class Assets {
         switch (type) {
             case GAME:
                 assetManager.load("images/game.pack", TextureAtlas.class);
+                assetManager.load("audio/shoot.mp3", Sound.class);
+                assetManager.load("audio/mortal.mp3", Music.class);
+                assetManager.load("audio/fight.mp3", Music.class);
+                assetManager.load("audio/hahaha.mp3", Music.class);
+                assetManager.load("audio/general_music.mp3", Music.class);
+                assetManager.load("audio/mk2021.mp3", Music.class);
+                assetManager.load("audio/boom.mp3", Music.class);
+
+
                 createStandardFont(32);
                 createStandardFont(24);
                 createStandardFont(20);
                 createStandardFont(72);
                 break;
+
+            case MENU:
+                assetManager.load("images/game.pack", TextureAtlas.class);
+                assetManager.load("audio/music.mp3", Music.class);
+                assetManager.load("audio/cosmos_music.mp3", Music.class);
+
+                createStandardFont(72);
+                createStandardFont(24);
+                break;
+
+            case GAMEOVER:
+                assetManager.load("images/game.pack", TextureAtlas.class);
+                assetManager.load("audio/game_over.mp3", Music.class);
+                createStandardFont(72);
+                createStandardFont(48);
+                createStandardFont(24);
+                break;
+
         }
     }
 
