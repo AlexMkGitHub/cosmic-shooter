@@ -111,8 +111,6 @@ public class Asteroid implements Poolable {
         position.set(x, y);
         velocity.set(vx, vy);
         active = true;
-
-
         hpMax = (int) (5 * scale + gc.getLevel() * 2);
         hp = hpMax;
         angle = MathUtils.random(-360.0f, 360.0f);
