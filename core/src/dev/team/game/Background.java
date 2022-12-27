@@ -9,34 +9,6 @@ import dev.team.screen.ScreenManager;
 import dev.team.screen.utils.Assets;
 
 public class Background {
-
-    private class Star {
-        Vector2 position;
-        Vector2 velocity;
-        float scale;
-
-        public Star() {
-            this.position = new Vector2(MathUtils.random(-200, ScreenManager.SCREEN_WIDTH + 200), MathUtils.random(-200, ScreenManager.SCREEN_HEIGHT + 200));
-            this.velocity = new Vector2(MathUtils.random(-40, 5), 0);
-            this.scale = Math.abs(velocity.x) / 40f * 0.8f;
-
-        }
-
-        public void update(float dt) {
-            if (gc != null) {
-                position.x += (velocity.x - gc.getHero().getVelocity().x * 0.1) * dt;
-                position.y += (velocity.y - gc.getHero().getVelocity().y * 0.1) * dt;
-            } else {
-                position.mulAdd(velocity, dt);
-            }
-
-            if (position.x < -200) {
-                position.x = ScreenManager.SCREEN_WIDTH + 200;
-                position.y = MathUtils.random(-200, ScreenManager.SCREEN_HEIGHT + 200);
-            }
-        }
-    }
-
     private final int STAR_COUNT = 1000;
     private GameController gc;
     private Texture textureCosmos;
@@ -74,6 +46,34 @@ public class Background {
 
     public void dispose() {
         textureCosmos.dispose();
+    }
+
+    private class Star {
+        Vector2 position;
+        Vector2 velocity;
+        float scale;
+
+        private Star() {
+            this.position = new Vector2(MathUtils.random(-200, ScreenManager.SCREEN_WIDTH + 200), MathUtils.random(-200, ScreenManager.SCREEN_HEIGHT + 200));
+            this.velocity = new Vector2(MathUtils.random(-40, 5), 0);
+            this.scale = Math.abs(velocity.x) / 40f * 0.8f;
+
+        }
+
+        private void update(float dt) {
+            if (gc != null) {
+                position.x += (velocity.x - gc.getHero().getVelocity().x * 0.1) * dt;
+                position.y += (velocity.y - gc.getHero().getVelocity().y * 0.1) * dt;
+            } else {
+                position.mulAdd(velocity, dt);
+            }
+
+            if (position.x < -200) {
+                position.x = ScreenManager.SCREEN_WIDTH + 200;
+                position.y = MathUtils.random(-200, ScreenManager.SCREEN_HEIGHT + 200);
+            }
+        }
+
     }
 
 }
