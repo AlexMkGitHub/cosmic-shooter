@@ -1,0 +1,234 @@
+
+images1.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+boom
+  rotate: false
+  xy: 2, 2
+  size: 835, 735
+  orig: 835, 735
+  offset: 0, 0
+  index: -1
+powerups2
+  rotate: false
+  xy: 2, 739
+  size: 360, 240
+  orig: 360, 240
+  offset: 0, 0
+  index: -1
+powerups
+  rotate: false
+  xy: 364, 739
+  size: 360, 240
+  orig: 360, 240
+  offset: 0, 0
+  index: -1
+ast3
+  rotate: false
+  xy: 726, 739
+  size: 260, 256
+  orig: 260, 256
+  offset: 0, 0
+  index: -1
+ship9
+  rotate: false
+  xy: 839, 2
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+ship8
+  rotate: false
+  xy: 839, 132
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+ship7
+  rotate: false
+  xy: 839, 262
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+ship5
+  rotate: false
+  xy: 839, 392
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+ship4
+  rotate: false
+  xy: 839, 522
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+shortButton
+  rotate: false
+  xy: 839, 652
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+ship2
+  rotate: false
+  xy: 921, 652
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+xp
+  rotate: false
+  xy: 2, 981
+  size: 120, 32
+  orig: 120, 32
+  offset: 0, 0
+  index: -1
+smButton
+  rotate: false
+  xy: 124, 981
+  size: 120, 32
+  orig: 120, 32
+  offset: 0, 0
+  index: -1
+bullet
+  rotate: false
+  xy: 969, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+star16
+  rotate: false
+  xy: 1003, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+mini
+  rotate: false
+  xy: 1003, 20
+  size: 2, 2
+  orig: 2, 2
+  offset: 0, 0
+  index: -1
+
+images2.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+asteroid
+  rotate: false
+  xy: 2, 2
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+ast8
+  rotate: false
+  xy: 260, 2
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+ast7
+  rotate: false
+  xy: 518, 2
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+ast6
+  rotate: false
+  xy: 2, 260
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+ast5
+  rotate: false
+  xy: 2, 518
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+ast4
+  rotate: false
+  xy: 260, 260
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+ast2
+  rotate: false
+  xy: 518, 260
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+ast1
+  rotate: false
+  xy: 260, 518
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+ship10
+  rotate: false
+  xy: 776, 2
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+ship6
+  rotate: false
+  xy: 776, 132
+  size: 128, 120
+  orig: 128, 120
+  offset: 0, 0
+  index: -1
+simpleButton
+  rotate: false
+  xy: 518, 518
+  size: 320, 80
+  orig: 320, 80
+  offset: 0, 0
+  index: -1
+ship
+  rotate: false
+  xy: 906, 2
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+money
+  rotate: false
+  xy: 906, 132
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+bot
+  rotate: false
+  xy: 2, 776
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+ammo
+  rotate: false
+  xy: 2, 842
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+aidkit
+  rotate: false
+  xy: 2, 908
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
